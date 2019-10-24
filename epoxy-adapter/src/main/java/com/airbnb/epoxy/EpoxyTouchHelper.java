@@ -390,6 +390,28 @@ public abstract class EpoxyTouchHelper {
      * want to hold a reference to it if you need to later detach the recyclerview to disable touch
      * events via setting null on {@link ItemTouchHelper#attachToRecyclerView(RecyclerView)}
      */
+    public ItemTouchHelper andCallbacks(final EpoxyModelTouchCallback<U> epoxyModelTouchCallback) {
+      ItemTouchHelper itemTouchHelper =
+            new ItemTouchHelper(epoxyModelTouchCallback);
+
+      itemTouchHelper.attachToRecyclerView(recyclerView);
+
+      return itemTouchHelper;
+    }
+
+    /**
+     * Set callbacks to handle swipe actions and lifecycle events.
+     * <p>
+     * You MUST implement {@link SwipeCallbacks#onSwipeCompleted(EpoxyModel, View, int, int)} to
+     * remove the swiped item from your data and request a model build.
+     * <p>
+     * You can optionally implement the other callbacks to modify the view as it is being swiped.
+     *
+     * @return An {@link ItemTouchHelper} instance that has been initialized and attached to a
+     * recyclerview. The touch helper has already been fully set up and can be ignored, but you may
+     * want to hold a reference to it if you need to later detach the recyclerview to disable touch
+     * events via setting null on {@link ItemTouchHelper#attachToRecyclerView(RecyclerView)}
+     */
     public ItemTouchHelper andCallbacks(final SwipeCallbacks<U> callbacks) {
       ItemTouchHelper itemTouchHelper =
           new ItemTouchHelper(new EpoxyModelTouchCallback<U>(null, targetModelClass) {
